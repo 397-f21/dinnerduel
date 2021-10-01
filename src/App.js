@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import React from "react";
 import './App.css';
 
-function App() {
+const choices = ["Tomate", "Cozi Noodles"];
+
+const Restaurant = ({restaurant}) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className = "card m-2 p-2">
+      <div className = "card-body">
+        <div className="card-title">{restaurant}</div>
+      </div>
+    </div>
+  );
+}
+const RestaurantChoices = ({choices}) => {
+  return (
+    <div className="restaurant-choices">
+      <Restaurant restaurant={choices[0]}/>
+      <Restaurant restaurant={choices[1]}/>
+    </div>
+  );
+}
+
+const App = () => {
+  return (
+    <div className="app">
+      <RestaurantChoices choices={choices}/> 
     </div>
   );
 }
