@@ -1,10 +1,36 @@
-.restaurant-choices{ 
-  width:40%;
-  text-align:center;
+.restaurant-choices {
+  width: 40%;
+  text-align: center;
   margin: auto;
-  margin-top:300px;
+  margin-top: 300px;
+}
+.restaurant {
+  border: 3px solid orange;
+}
+.header {
+  position: relative;
+  top: 0;
+  left: 0;
+  padding: 2%;
+  width: 100%;
+  z-index: 10;
+  text-align: center;
+  background-color: orange;
+  color: white;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+/* 
+input {
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  width: 60%;
+  padding: 2em;
+  font-size: 2em;
 }
 
-.app{
-  
-}
+h2 {
+  text-align: center;
+  margin-top: 20px;
+} */
