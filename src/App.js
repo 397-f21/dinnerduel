@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import "./App.css";
-
+import vs from "./vs.png";
 //make a option to decide randomly, in case people still can't decide
 //optimal solution: being able to get inputs from multiple application
 
-const choices = ["Tomate", "Cozi Noodles", "Five & Dime", "Allison"];
+const choices = [
+  "Tomate",
+  "Cozi Noodles",
+  "Five & Dime",
+  "Allison Dining Hall",
+];
 
 //make an array of all the restaurants we want index 0 and 1 compete against
 //remove from the array from the front and then continue until one restaurant left
@@ -18,13 +23,13 @@ const Restaurant = ({
   return (
     <div
       className="card m-2 p-2 restaurant"
-      onClick={() =>
+      onClick={() => {
         setActiveRestaurants(
           activeRestaurants.filter(
             (restaurant) => restaurant !== activeRestaurants[restaurantToRemove]
           )
-        )
-      }
+        );
+      }}
     >
       <div className="card-body">
         <div className="card-title">{restaurant}</div>
@@ -35,7 +40,7 @@ const Restaurant = ({
 
 const RestaurantChoices = ({ choices, setWinner }) => {
   const [activeRestaurants, setActiveRestaurants] = useState(choices);
-  //console.log(activeRestaurants);
+
   if (activeRestaurants.length === 1) {
     setWinner(activeRestaurants[0]);
   }
@@ -48,6 +53,7 @@ const RestaurantChoices = ({ choices, setWinner }) => {
         activeRestaurants={activeRestaurants}
         restaurantToRemove={1}
       />
+      <img src={vs} className="vs" />
       <Restaurant
         restaurant={activeRestaurants[1]}
         setActiveRestaurants={setActiveRestaurants}
@@ -58,13 +64,20 @@ const RestaurantChoices = ({ choices, setWinner }) => {
   );
 };
 
-const WinningRestaurant = ({ winner }) => {
-  console.log(winner);
+const RestaurantWinner = ({ restaurant }) => {
   return (
-    <>
-      <h2> The winning restaurant is...</h2>
-      <Restaurant restaurant={winner} />
-    </>
+    <div className="card-body">
+      <h2> {restaurant}</h2>
+    </div>
+  );
+};
+
+const WinningRestaurant = ({ winner }) => {
+  return (
+    <div className="winning-restaurant">
+      <h3> The winning restaurant is...</h3>
+      <RestaurantWinner restaurant={winner} />
+    </div>
   );
 };
 
@@ -75,13 +88,11 @@ const Header = () => {
     </header>
   );
 };
-
 const App = () => {
   const [winner, setWinner] = useState();
   return (
     <>
       <Header></Header>
-      {/* <RestaurantChoices choices={choices} /> */}
       {winner ? (
         <WinningRestaurant winner={winner} />
       ) : (
