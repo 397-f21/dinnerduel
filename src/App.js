@@ -13,7 +13,29 @@ const choices = [
 
 //make an array of all the restaurants we want index 0 and 1 compete against
 //remove from the array from the front and then continue until one restaurant left
+const RandomRestaurant = ({
+    setActiveRestaurants,
+    restaurantToRemove,
+    activeRestaurants,
 
+}) => {
+  return(
+    <div
+    className="card m-2 p-2 random"
+    onClick={() => {
+      setActiveRestaurants(
+        activeRestaurants.filter(
+          (restaurant) => restaurant !== activeRestaurants[restaurantToRemove]
+        )
+      );
+    }}
+  >
+    <div className="card-body">
+      <div className="card-title">Choose random restaurant</div>
+    </div>
+  </div>
+  );
+};
 const Restaurant = ({
   restaurant,
   setActiveRestaurants,
@@ -22,7 +44,7 @@ const Restaurant = ({
 }) => {
   return (
     <div
-      className="card m-2 p-2 restaurant"
+      className="card p-2 restaurant"
       onClick={() => {
         setActiveRestaurants(
           activeRestaurants.filter(
@@ -46,6 +68,8 @@ const RestaurantChoices = ({ choices, setWinner }) => {
   }
 
   return (
+    <>
+    <h3> Round {choices.length - activeRestaurants.length+1} of {choices.length-1}</h3>
     <div className="restaurant-choices">
       <Restaurant
         restaurant={activeRestaurants[0]}
@@ -60,7 +84,14 @@ const RestaurantChoices = ({ choices, setWinner }) => {
         activeRestaurants={activeRestaurants}
         restaurantToRemove={0}
       />
+      <RandomRestaurant
+      setActiveRestaurants = {setActiveRestaurants}
+      activeRestaurants = {activeRestaurants}
+      restaurantToRemove = {Math.random() < 0.5? 0: 1}
+      />
     </div>
+    
+    </>
   );
 };
 
