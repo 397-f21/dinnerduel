@@ -88,60 +88,103 @@ const Header = () => {
     </header>
   );
 };
-// const RestaurantForm = () => {
-//   const [inputs, setInputs] = useState({});
+const RestaurantForm1 = () => {
+  const [inputs, setInputs] = useState([]);
 
-//   const handleChange = (event) => {
-//     const name = event.target.name;
-//     const value = event.target.value;
-//     setInputs((values) => ({ ...values, [name]: value }));
-//   };
+  const handleChange = (event) => {
+    //const name = event.target.name;
+    const value = event.target.value;
+    setInputs((values) => ({ ...values, value }));
+    console.log(event);
+  };
 
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     console.log(inputs);
-//   };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(inputs);
+  };
 
-//   return (
-//     <>
-//       <h2> Enter your restaurant choices</h2>
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="text"
-//           name="restaurant1"
-//           value={inputs.restaurant1 || ""}
-//           onChange={handleChange}
-//         />
-//         <input
-//           type="text"
-//           name="restaurant2"
-//           value={inputs.restaurant2 || ""}
-//           onChange={handleChange}
-//         />
-//         <input
-//           type="text"
-//           name="restaurant3"
-//           value={inputs.restaurant3 || ""}
-//           onChange={handleChange}
-//         />
-//         <input
-//           type="text"
-//           name="restaurant4"
-//           value={inputs.restaurant4 || ""}
-//           onChange={handleChange}
-//         />
-//         <input type="submit" />
-//       </form>
-//     </>
-//   );
-// };
+  return (
+    <>
+      <h2> Enter your restaurant choices</h2>
+      <form>
+        <input
+          type="text"
+          //name="restaurant"
+          value={inputs.restaurant || ""}
+          onChange={handleChange}
+        />
+        <input
+          type="submit"
+          onClick={() => {
+            handleChange();
+          }}
+        />
+      </form>
+    </>
+  );
+};
+
+const RestaurantForm = () => {
+  const [inputList, setInputList] = useState([{ restaurant: "" }]);
+
+  // handle input change
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...inputList];
+    list[index][name] = value;
+    setInputList(list);
+  };
+
+  // handle click event of the Remove button
+  const handleRemoveClick = (index) => {
+    const list = [...inputList];
+    list.splice(index, 1);
+    setInputList(list);
+  };
+
+  // handle click event of the Add button
+  const handleAddClick = () => {
+    setInputList([...inputList, { restaurant: "" }]);
+  };
+
+  return (
+    <>
+      {inputList.map((x, i) => {
+        return (
+          <div className="box">
+            <input
+              name="firstName"
+              placeholder="Enter Restaurant"
+              value={x.firstName}
+              onChange={(e) => handleInputChange(e, i)}
+            />
+            <div className="btn-box">
+              {inputList.length !== 1 && (
+                <button className="mr10" onClick={() => handleRemoveClick(i)}>
+                  Remove
+                </button>
+              )}
+              {inputList.length - 1 === i && (
+                <button onClick={handleAddClick}>Add</button>
+              )}
+            </div>
+          </div>
+        );
+      })}
+      <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+    </>
+  );
+};
 
 const App = () => {
   const [winner, setWinner] = useState();
+  const [formScreen, setFormScreen] = useState(true);
   return (
     <>
       <Header></Header>
-      {winner ? (
+      {formScreen ? (
+        <RestaurantForm></RestaurantForm>
+      ) : winner ? (
         <WinningRestaurant winner={winner} />
       ) : (
         <RestaurantChoices choices={choices} setWinner={setWinner} />
