@@ -88,22 +88,6 @@ const Header = () => {
     </header>
   );
 };
-const App = () => {
-  const [winner, setWinner] = useState();
-  return (
-    <>
-      <Header></Header>
-      {winner ? (
-        <WinningRestaurant winner={winner} />
-      ) : (
-        <RestaurantChoices choices={choices} setWinner={setWinner} />
-      )}
-    </>
-  );
-};
-
-export default App;
-
 // const RestaurantForm = () => {
 //   const [inputs, setInputs] = useState({});
 
@@ -151,3 +135,19 @@ export default App;
 //     </>
 //   );
 // };
+
+const App = () => {
+  const [winner, setWinner] = useState();
+  return (
+    <>
+      <Header></Header>
+      {winner ? (
+        <WinningRestaurant winner={winner} />
+      ) : (
+        <RestaurantChoices choices={choices} setWinner={setWinner} />
+      )}
+    </>
+  );
+};
+
+export default App;
