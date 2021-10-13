@@ -88,44 +88,8 @@ const Header = () => {
     </header>
   );
 };
-const RestaurantForm1 = () => {
-  const [inputs, setInputs] = useState([]);
 
-  const handleChange = (event) => {
-    //const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, value }));
-    console.log(event);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(inputs);
-  };
-
-  return (
-    <>
-      <h2> Enter your restaurant choices</h2>
-      <form>
-        <input
-          type="text"
-          //name="restaurant"
-          value={inputs.restaurant || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="submit"
-          onClick={() => {
-            handleChange();
-          }}
-        />
-      </form>
-    </>
-  );
-};
-
-const RestaurantForm = () => {
-  const [inputList, setInputList] = useState([{ restaurant: "" }]);
+const RestaurantForm = ({inputList, setInputList, setFormScreen}) => {
 
   // handle input change
   const handleInputChange = (e, index) => {
@@ -147,15 +111,19 @@ const RestaurantForm = () => {
     setInputList([...inputList, { restaurant: "" }]);
   };
 
+  const handleSubmit = () => {
+    setFormScreen(false);
+  };
+
   return (
     <>
       {inputList.map((x, i) => {
         return (
           <div className="box">
             <input
-              name="firstName"
+              name="restaurant"
               placeholder="Enter Restaurant"
-              value={x.firstName}
+              value={x.restaurant}
               onChange={(e) => handleInputChange(e, i)}
             />
             <div className="btn-box">
@@ -171,7 +139,8 @@ const RestaurantForm = () => {
           </div>
         );
       })}
-      <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
+      <div style={{ marginTop: 20 }}>{JSON.stringify(inputList.map((r) => r.restaurant))}</div>
+      <button onClick={handleSubmit}>Submit</button>
     </>
   );
 };
@@ -179,15 +148,17 @@ const RestaurantForm = () => {
 const App = () => {
   const [winner, setWinner] = useState();
   const [formScreen, setFormScreen] = useState(true);
+  const [inputList, setInputList] = useState([{ restaurant: "" }]);
+  
   return (
     <>
       <Header></Header>
       {formScreen ? (
-        <RestaurantForm></RestaurantForm>
+        <RestaurantForm inputList={inputList} setInputList={setInputList} setFormScreen={setFormScreen}/>
       ) : winner ? (
         <WinningRestaurant winner={winner} />
       ) : (
-        <RestaurantChoices choices={choices} setWinner={setWinner} />
+        <RestaurantChoices choices={inputList.map((r) => r.restaurant).filter((r) => r !== "")} setWinner={setWinner} />
       )}
     </>
   );
