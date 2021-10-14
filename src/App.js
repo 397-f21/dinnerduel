@@ -4,16 +4,30 @@ import vs from "./vs.png";
 //make a option to decide randomly, in case people still can't decide
 //optimal solution: being able to get inputs from multiple application
 
-const choices = [
-  "Tomate",
-  "Cozi Noodles",
-  "Five & Dime",
-  "Allison Dining Hall",
-];
-
 //make an array of all the restaurants we want index 0 and 1 compete against
 //remove from the array from the front and then continue until one restaurant left
-
+const RandomRestaurant = ({
+  setActiveRestaurants,
+  restaurantToRemove,
+  activeRestaurants,
+}) => {
+  return (
+    <div
+      className="card m-2 p-2 random"
+      onClick={() => {
+        setActiveRestaurants(
+          activeRestaurants.filter(
+            (restaurant) => restaurant !== activeRestaurants[restaurantToRemove]
+          )
+        );
+      }}
+    >
+      <div className="card-body">
+        <div className="card-title">Choose random restaurant!</div>
+      </div>
+    </div>
+  );
+};
 const Restaurant = ({
   restaurant,
   setActiveRestaurants,
@@ -22,7 +36,7 @@ const Restaurant = ({
 }) => {
   return (
     <div
-      className="card m-2 p-2 restaurant"
+      className="card p-2 restaurant"
       onClick={() => {
         setActiveRestaurants(
           activeRestaurants.filter(
@@ -46,21 +60,33 @@ const RestaurantChoices = ({ choices, setWinner }) => {
   }
 
   return (
-    <div className="restaurant-choices">
-      <Restaurant
-        restaurant={activeRestaurants[0]}
-        setActiveRestaurants={setActiveRestaurants}
-        activeRestaurants={activeRestaurants}
-        restaurantToRemove={1}
-      />
-      <img src={vs} className="vs" />
-      <Restaurant
-        restaurant={activeRestaurants[1]}
-        setActiveRestaurants={setActiveRestaurants}
-        activeRestaurants={activeRestaurants}
-        restaurantToRemove={0}
-      />
-    </div>
+    <>
+      <h3 className="currentRound">
+        {" "}
+        Round {choices.length - activeRestaurants.length + 1} of{" "}
+        {choices.length - 1}
+      </h3>
+      <div className="restaurant-choices">
+        <Restaurant
+          restaurant={activeRestaurants[0]}
+          setActiveRestaurants={setActiveRestaurants}
+          activeRestaurants={activeRestaurants}
+          restaurantToRemove={1}
+        />
+        <img src={vs} className="vs" />
+        <Restaurant
+          restaurant={activeRestaurants[1]}
+          setActiveRestaurants={setActiveRestaurants}
+          activeRestaurants={activeRestaurants}
+          restaurantToRemove={0}
+        />
+        <RandomRestaurant
+          setActiveRestaurants={setActiveRestaurants}
+          activeRestaurants={activeRestaurants}
+          restaurantToRemove={Math.random() < 0.5 ? 0 : 1}
+        />
+      </div>
+    </>
   );
 };
 
@@ -84,49 +110,12 @@ const WinningRestaurant = ({ winner }) => {
 const Header = () => {
   return (
     <header className="header">
-      <h1>Dinner Duel</h1>
+      <h1>DINNER DUELS</h1>
     </header>
   );
 };
-const RestaurantForm1 = () => {
-  const [inputs, setInputs] = useState([]);
 
-  const handleChange = (event) => {
-    //const name = event.target.name;
-    const value = event.target.value;
-    setInputs((values) => ({ ...values, value }));
-    console.log(event);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(inputs);
-  };
-
-  return (
-    <>
-      <h2> Enter your restaurant choices</h2>
-      <form>
-        <input
-          type="text"
-          //name="restaurant"
-          value={inputs.restaurant || ""}
-          onChange={handleChange}
-        />
-        <input
-          type="submit"
-          onClick={() => {
-            handleChange();
-          }}
-        />
-      </form>
-    </>
-  );
-};
-
-const RestaurantForm = () => {
-  const [inputList, setInputList] = useState([{ restaurant: "" }]);
-
+const RestaurantForm = ({ inputList, setInputList, setFormScreen }) => {
   // handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -147,47 +136,84 @@ const RestaurantForm = () => {
     setInputList([...inputList, { restaurant: "" }]);
   };
 
+  const handleSubmit = () => {
+    setFormScreen(false);
+  };
+
   return (
-    <>
+    <div className="restaurant-form">
+      <h2> Enter Your Restaurant Options </h2>
       {inputList.map((x, i) => {
         return (
           <div className="box">
-            <input
-              name="firstName"
-              placeholder="Enter Restaurant"
-              value={x.firstName}
-              onChange={(e) => handleInputChange(e, i)}
-            />
-            <div className="btn-box">
-              {inputList.length !== 1 && (
-                <button className="mr10" onClick={() => handleRemoveClick(i)}>
-                  Remove
-                </button>
-              )}
-              {inputList.length - 1 === i && (
-                <button onClick={handleAddClick}>Add</button>
-              )}
+            <div className="restaurant-wrapper">
+              <input
+                name="restaurant"
+                placeholder="Enter Restaurant"
+                value={x.restaurant}
+                onChange={(e) => handleInputChange(e, i)}
+              />
+              <div className="btn-box">
+                {inputList.length !== 1 && (
+                  <button
+                    className="remove-button"
+                    onClick={() => handleRemoveClick(i)}
+                  >
+                    x
+                  </button>
+                )}
+              </div>
             </div>
+
+            {inputList.length - 1 === i && (
+              <button className="add-button" onClick={handleAddClick}>
+                Add Another Restaurant
+              </button>
+            )}
           </div>
         );
       })}
-      <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div>
-    </>
+
+      <hr></hr>
+      <div className="rests-to-duel">
+        <h3> Restaurants To Duel </h3>
+
+        <div className="restaurants-dueling">
+          {inputList
+            .filter((r) => r.restaurant !== "")
+            .map((r) => (
+              <li>{r.restaurant}</li>
+            ))}
+        </div>
+        <button className="submit-button" onClick={handleSubmit}>
+          START DUELING
+        </button>
+      </div>
+    </div>
   );
 };
 
 const App = () => {
   const [winner, setWinner] = useState();
   const [formScreen, setFormScreen] = useState(true);
+  const [inputList, setInputList] = useState([{ restaurant: "" }]);
+
   return (
     <>
       <Header></Header>
       {formScreen ? (
-        <RestaurantForm></RestaurantForm>
+        <RestaurantForm
+          inputList={inputList}
+          setInputList={setInputList}
+          setFormScreen={setFormScreen}
+        />
       ) : winner ? (
         <WinningRestaurant winner={winner} />
       ) : (
-        <RestaurantChoices choices={choices} setWinner={setWinner} />
+        <RestaurantChoices
+          choices={inputList.map((r) => r.restaurant).filter((r) => r !== "")}
+          setWinner={setWinner}
+        />
       )}
     </>
   );

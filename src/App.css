@@ -1,15 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;1,900&display=swap");
+
+body {
+  overflow-y: hidden;
+  font-family: "Lato", sans-serif;
+}
+.random {
+  text-align: center;
+  background-color: white;
+  color: orange;
+  border: 3px solid orange;
+  font-size: 1.2em;
+  padding: 3em 0;
+  margin-top: 2em;
+  transition: 0.3s;
+}
 .restaurant-choices {
   width: 40%;
   text-align: center;
   margin: auto;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 .restaurant {
   background-color: orange;
   color: white;
   font-size: 1.5em;
   padding: 3em 0;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   transition: 0.3s;
 }
 .restaurant:hover {
@@ -29,6 +45,12 @@
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
+.header h1 {
+  font-weight: 900;
+  font-style: italic;
+  text-shadow: 3px 3px #d8873b;
+  font-size: 4em;
+}
 .vs {
   width: 10em;
 }
@@ -39,17 +61,69 @@
 .winning-restaurant h2 {
   font-size: 4em;
 }
-/* 
-input {
+.restaurant-form {
+  width: 70%;
+  margin: auto;
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid gray;
+  box-shadow: 3px 3px gray;
+  border-radius: 10px;
+}
+.restaurant-form h2 {
+  font-weight: 900;
+  text-align: center;
+}
+.restaurant-form input {
+  width: 70%;
+  height: 2.5em;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+.restaurant-wrapper {
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+}
+.currentRound {
+  text-align: center;
+  font-size: 3em;
+  margin-top: 30px;
+}
+.add-button {
   display: block;
   margin: auto;
-  margin-top: 20px;
-  width: 60%;
-  padding: 2em;
-  font-size: 2em;
+  border: 3px solid rgba(255, 149, 10, 0.911);
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 10px;
+  font-weight: 900;
+  color: rgba(197, 83, 6, 0.849);
 }
-
-h2 {
+.remove-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 12px 5px 12px;
+}
+.br {
+  border: 3px solid black;
+}
+.rests-to-duel {
+  width: 70%;
+  display: block;
+  margin: auto;
   text-align: center;
-  margin-top: 20px;
-} */
+}
+.rests-to-duel li {
+  text-align: left;
+}
+.submit-button {
+  background-color: orange;
+  font-weight: 900;
+  border-radius: 10px;
+  color: white;
+  text-shadow: 2px 2px rgb(226, 130, 3);
+  padding: 20px;
+  border: none;
+}
