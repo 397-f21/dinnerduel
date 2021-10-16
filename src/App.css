@@ -9,9 +9,11 @@ body {
   color: orange;
   border: 3px solid orange;
   font-size: 1.2em;
-  padding: 3em 0;
+  /* padding: 3em 0; */
   margin-top: 2em;
   transition: 0.3s;
+  /* width: 80%; */
+  
 }
 .restaurant-choices {
   width: 40%;
@@ -24,7 +26,6 @@ body {
   color: white;
   font-size: 1.5em;
   padding: 3em 0;
-  margin-bottom: 1em;
   transition: 0.3s;
 }
 .restaurant:hover {
@@ -44,11 +45,12 @@ body {
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
+
 .header h1 {
   font-weight: 900;
   font-style: italic;
   text-shadow: 3px 3px #d8873b;
-  font-size: 4em;
+  /* font-size: 4em; */
 }
 .vs {
   width: 10em;
@@ -125,4 +127,14 @@ body {
   text-shadow: 2px 2px rgb(226, 130, 3);
   padding: 20px;
   border: none;
+}
+
+@media only screen and (max-width: 480px) {
+  .header h1 {
+    font-size: 2.5em;
+  }
+
+  .vs {
+    width: 7em; 
+  }
 }

@@ -13,7 +13,7 @@ const RandomRestaurant = ({
 }) => {
   return (
     <div
-      className="card m-2 p-2 random"
+      className="card random"
       onClick={() => {
         setActiveRestaurants(
           activeRestaurants.filter(
@@ -23,7 +23,7 @@ const RandomRestaurant = ({
       }}
     >
       <div className="card-body">
-        <div className="card-title">Choose random restaurant!</div>
+        <div className="card-title">Choose for me!</div>
       </div>
     </div>
   );
@@ -53,7 +53,8 @@ const Restaurant = ({
 };
 
 const RestaurantChoices = ({ choices, setWinner }) => {
-  const [activeRestaurants, setActiveRestaurants] = useState(choices);
+  const shuffled = choices.sort(() => Math.random() - 0.5)
+  const [activeRestaurants, setActiveRestaurants] = useState(shuffled);
 
   if (activeRestaurants.length === 1) {
     setWinner(activeRestaurants[0]);
@@ -176,7 +177,7 @@ const RestaurantForm = ({ inputList, setInputList, setFormScreen }) => {
 
       <hr></hr>
       <div className="rests-to-duel">
-        <h3> Restaurants To Duel </h3>
+        {/* <h3> Restaurants To Duel </h3>
 
         <div className="restaurants-dueling">
           {inputList
@@ -184,7 +185,7 @@ const RestaurantForm = ({ inputList, setInputList, setFormScreen }) => {
             .map((r) => (
               <li>{r.restaurant}</li>
             ))}
-        </div>
+        </div> */}
         <button className="submit-button" onClick={handleSubmit}>
           START DUELING
         </button>
